@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ghatfan Aufa Rizki | Rekayasa Perangkat Lunak</title>
+    <!-- Google Fonts: Poppins & Inter untuk kemiripan modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: #111827;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+        }
+
+        /* custom scrollbar minimal */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* ----- NAVBAR (mirip dengan efek transparan dan solid saat scroll) ----- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            padding: 18px 0;
+            transition: all 0.25s ease;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo a {
+            font-size: 1.65rem;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #1f2937;
+            transition: 0.2s;
+            font-size: 0.98rem;
+            letter-spacing: -0.2px;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #2563eb;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 1.7rem;
+            cursor: pointer;
+            color: #0f172a;
+        }
+
+        /* Hero Section (sangat mirip: layout dua kolom dengan foto dan teks) */
+        .hero {
+            padding: 150px 0 90px;
+            background: #fefeff;
+        }
+        .hero-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .hero-text {
+            flex: 1.2;
+        }
+        .hero-text .greeting {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2563eb;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.3px;
+        }
+        .hero-text h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #0b1120;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+        .hero-text .role {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #334155;
+            margin-bottom: 1rem;
+            border-left: 3px solid #2563eb;
+            padding-left: 12px;
+        }
+        .hero-text p {
+            font-size: 1rem;
+            color: #4b5563;
+            max-width: 540px;
+            margin: 1rem 0 1.8rem;
+            line-height: 1.6;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: #0f172a;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: #1e293b;
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #e2e8f0;
+            color: #1e293b;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+        .btn-outline:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+            transform: translateY(-2px);
+        }
+        .hero-avatar {
+            flex: 0.8;
+            text-align: center;
+            position: relative;
+        }
+        .hero-avatar img {
+            max-width: 280px;
+            width: 100%;
+            border-radius: 42% 58% 35% 65% / 58% 42% 58% 42%;
+            background: linear-gradient(145deg, #f0f4ff, #ffffff);
+            box-shadow: 0 30px 35px -15px rgba(0,0,0,0.1);
+            object-fit: cover;
+            border: 3px solid white;
+        }
+
+        /* Section title khas */
+        section {
+            padding: 80px 0;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: -0.3px;
+            position: relative;
+            color: #0f172a;
+        }
+        .section-title:after {
+            content: '';
+            width: 65px;
+            height: 4px;
+            background: #2563eb;
+            display: block;
+            margin: 12px auto 0;
+            border-radius: 4px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            align-items: flex-start;
+        }
+        .about-text {
+            flex: 1.3;
+            font-size: 1rem;
+            color: #334155;
+            line-height: 1.65;
+        }
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+        .about-stats {
+            flex: 0.7;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            justify-content: flex-start;
+        }
+        .stat-card {
+            background: #f8fafc;
+            padding: 1rem 1.5rem;
+            border-radius: 28px;
+            text-align: center;
+            min-width: 110px;
+            border: 1px solid #eef2ff;
+            transition: 0.2s;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: #5b6e8c;
+            font-weight: 500;
+        }
+
+        /* Skills Grid (mirip chip) */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+        }
+        .skill-item {
+            background: #ffffff;
+            border-radius: 60px;
+            padding: 0.7rem 1.5rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            border: 1px solid #e9edf2;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .skill-item i {
+            font-size: 1.3rem;
+            color: #2563eb;
+        }
+        .skill-item:hover {
+            border-color: #b9d0f8;
+            transform: translateY(-3px);
+        }
+
+        /* PORTOFOLIO SECTION - semirip mungkin dengan referensi: card modern, gambar, tag, tombol */
+        .portofolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 2rem;
+        }
+        .porto-card {
+            background: #ffffff;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px -12px rgba(0,0,0,0.07);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f2f5;
+        }
+        .porto-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 40px -16px rgba(0,0,0,0.12);
+        }
+        .porto-img {
+            height: 210px;
+            background: linear-gradient(145deg, #eef2ff, #e6edfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.2rem;
+            color: #1e40af;
+        }
+        .porto-info {
+            padding: 1.4rem 1.5rem 1.8rem;
+        }
+        .porto-info h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #0f172a;
+        }
+        .porto-info p {
+            color: #4b5563;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            line-height: 1.45;
+        }
+        .porto-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.2rem;
+        }
+        .tag {
+            background: #eef2ff;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #2563eb;
+            letter-spacing: -0.2px;
+        }
+        .porto-link {
+            text-decoration: none;
+            font-weight: 600;
+            color: #2563eb;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            border-bottom: 1px solid transparent;
+            transition: 0.2s;
+        }
+        .porto-link:hover {
+            gap: 10px;
+            border-bottom-color: #2563eb;
+        }
+
+        /* Contact Section - minimalis modern */
+        .contact-wrapper {
+            background: #ffffff;
+            border-radius: 48px;
+            padding: 3rem 2rem;
+            text-align: center;
+            border: 1px solid #eef2ff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+        }
+        .contact-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.8rem;
+            margin: 2rem 0 1rem;
+            flex-wrap: wrap;
+        }
+        .contact-icon {
+            background: #f8fafc;
+            width: 58px;
+            height: 58px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #1e293b;
+            transition: 0.2s;
+            text-decoration: none;
+            border: 1px solid #e9edf2;
+        }
+        .contact-icon:hover {
+            background: #2563eb;
+            color: white;
+            transform: scale(1.05);
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #edf2f7;
+            color: #6c7a91;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive fixes */
+        @media (max-width: 850px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-links {
+                position: fixed;
+                top: 74px;
+                left: -100%;
+                background: rgba(255,255,255,0.98);
+                backdrop-filter: blur(12px);
+                width: 75%;
+                height: calc(100vh - 74px);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2.5rem;
+                gap: 2rem;
+                transition: 0.3s;
+                box-shadow: 4px 0 20px rgba(0,0,0,0.05);
+                z-index: 998;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .hero-text h1 {
+                font-size: 2.3rem;
+            }
+            .container {
+                padding: 0 20px;
+            }
+            .hero {
+                padding: 120px 0 60px;
+            }
+        }
+        @media (max-width: 680px) {
+            .hero-content {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .btn-group {
+                justify-content: center;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+            .about-stats {
+                justify-content: center;
+            }
+            .portofolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .active-nav {
+            color: #2563eb !important;
+            font-weight: 600;
+        }
+        /* subtle animation */
+        .fade-up {
+            animation: fadeUp 0.6s ease-out;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+    </style>
+</head>
+<body>
+
+<nav id="navbar">
+    <div class="container nav-container">
+        <div class="logo">
+            <a href="#">IzzaBaguz</a>
+        </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#Home" class="nav-link active">Beranda</a></li>
+            <li><a href="#Tentang" class="nav-link">Tentang</a></li>
+            <li><a href="#Skill" class="nav-link">Skill</a></li>
+            <li><a href="#Portofolio" class="nav-link">Portofolio</a></li>
+            <li><a href="#Kontak" class="nav-link">Kontak</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Hero Section (mirip referensi dengan sapaan) -->
+<section id="Home" class="hero">
+    <div class="container hero-content">
+        <div class="hero-text">
+            <div class="greeting">👋 Hallo, Saya</div>
+            <h1>Ghatfan Aufa Rizki</h1>
+            <div class="role">Rekayasa Perangkat Lunak | Web Developer</div>
+            <p>Saya berfokus pada penciptaan pengalaman digital yang menarik dan selalu berupaya memberikan solusi terbaik dalam setiap proyek yang saya kerjakan.</p>
+            <div class="btn-group">
+                <a href="#Portofolio" class="btn-primary">Lihat Portofolio <i class="fas fa-arrow-right"></i></a>
+                <a href="#Kontak" class="btn-outline">Hubungi Saya</a>
+            </div>
+        </div>
+        <div class="hero-avatar">
+            <!-- Gambar placeholder style mirip referensi (bisa diganti dengan foto asli) -->
+            <img src="anomali.jpg" alt="GATANGGOP">
+        </div>
+    </div>
+</section>
+
+<!-- Tentang Saya -->
+<section id="Tentang">
+    <div class="container">
+        <h2 class="section-title">Tentang Saya</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Saya merupakan siswa di SMK Krian 1 Sidoarjo jurusan Rekayasa Perangkat Lunak. Selama menempuh pendidikan, saya telah mempelajari berbagai mata pelajaran produktif seperti Pemrograman Web, Basis Data, Pemrograman Berorientasi Objek, serta UI/UX Design. Saya memiliki ketertarikan khusus di bidang backend development dan database management.</p>
+                <p>Saya sudah mengerjakan beberapa project tugas sekolah mulai dari sistem informasi perpustakaan, aplikasi e-commerce sederhana, hingga website portofolio. Selain itu, saya aktif mengikuti ekstrakurikuler IT Club dan pernah mengikuti lomba kompetensi di bidang software development.</p>
+                <p>Saya percaya bahwa kerja keras, rasa ingin tahu, dan kolaborasi adalah kunci untuk berkembang di dunia teknologi. Saya terbuka untuk kesempatan magang, proyek kolaborasi, atau sekadar bertukar pikiran tentang dunia programming.</p>
+            </div>
+            <div class="about-stats">
+                <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Proyek Selesai</div></div>
+                <div class="stat-card"><div class="stat-number">4+</div><div class="stat-label">Tools Dikuasai</div></div>
+                <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">Komitmen</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skill / Keahlian -->
+<section id="Skill" style="background: #fefefe;">
+    <div class="container">
+        <h2 class="section-title">Keahlian & Tools</h2>
+        <div class="skills-grid">
+            <div class="skill-item"><i class="fab fa-html5"></i> HTML5</div>
+            <div class="skill-item"><i class="fab fa-css3-alt"></i> CSS3 / Tailwind</div>
+            <div class="skill-item"><i class="fab fa-js"></i> JavaScript (ES6+)</div>
+            <div class="skill-item"><i class="fab fa-react"></i> React.js</div>
+            <div class="skill-item"><i class="fab fa-node-js"></i> Node.js / Express</div>
+            <div class="skill-item"><i class="fas fa-database"></i> MongoDB / PostgreSQL</div>
+            <div class="skill-item"><i class="fab fa-figma"></i> Figma</div>
+            <div class="skill-item"><i class="fab fa-git-alt"></i> Git & Github</div>
+            <div class="skill-item"><i class="fas fa-cloud"></i> Vercel / Netlify</div>
+        </div>
+    </div>
+</section>
+
+<!-- PORTOFOLIO SECTION - semirip mungkin dengan referensi asli -->
+<section id="Portofolio">
+    <div class="container">
+        <h2 class="section-title">Portofolio</h2>
+        <div class="portofolio-grid">
+            <!-- Proyek 1 -->
+            <div class="porto-card">
+                <div class="porto-img"><i class="fas fa-laptop-code"></i></div>
+                <div class="porto-info">
+                    <h3>SiCerdas Academy</h3>
+                    <p>Platform manajemen kursus online untuk SMK dengan sistem penilaian dan sertifikat digital.</p>
+                    <div class="porto-tags"><span class="tag">React</span><span class="tag">Laravel</span><span class="tag">MySQL</span></div>
+                    <a href="#" class="porto-link">Lihat Proyek <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+            <!-- Proyek 2 -->
+            <div class="porto-card">
+                <div class="porto-img"><i class="fas fa-chart-line"></i></div>
+                <div class="porto-info">
+                    <h3>Analytics Dashboard</h3>
+                    <p>Dashboard interaktif untuk monitoring penjualan dan performa tim, dilengkapi grafik dinamis.</p>
+                    <div class="porto-tags"><span class="tag">Next.js</span><span class="tag">Chart.js</span><span class="tag">Tailwind</span></div>
+                    <a href="#" class="porto-link">Demo <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <!-- Proyek 3 -->
+            <div class="porto-card">
+                <div class="porto-img"><i class="fas fa-mobile-alt"></i></div>
+                <div class="porto-info">
+                    <h3>Weather Forecast App</h3>
+                    <p>Aplikasi cuaca realtime dengan UI/UX minimalis, menampilkan suhu dan prediksi 5 hari.</p>
+                    <div class="porto-tags"><span class="tag">JavaScript</span><span class="tag">API</span><span class="tag">CSS Grid</span></div>
+                    <a href="#" class="porto-link">Coba Aplikasi <i class="fas fa-cloud-sun"></i></a>
+                </div>
+            </div>
+            <!-- Proyek 4 -->
+            <div class="porto-card">
+                <div class="porto-img"><i class="fas fa-store"></i></div>
+                <div class="porto-info">
+                    <h3>WarungKita E-Commerce</h3>
+                    <p>Platform e-commerce untuk UMKM lokal dengan fitur keranjang dan sistem pembayaran sederhana.</p>
+                    <div class="porto-tags"><span class="tag">Node.js</span><span class="tag">Express</span><span class="tag">MongoDB</span></div>
+                    <a href="#" class="porto-link">Kunjungi <i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+            <!-- Proyek 5 (tambahan agar mirip dengan jumlah referensi yang kaya) -->
+            <div class="porto-card">
+                <div class="porto-img"><i class="fas fa-robot"></i></div>
+                <div class="porto-info">
+                    <h3>Virtual Assistant Chatbot</h3>
+                    <p>Chatbot cerdas berbasis NLP untuk layanan informasi kampus dan tanya jawab akademik.</p>
+                    <div class="porto-tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Rasa</span></div>
+                    <a href="#" class="porto-link">Demo Bot <i class="fas fa-comment-dots"></i></a>
+                </div>
+            </div>
+            <!-- Proyek 6 -->
+            <div class="porto-card">
+                <div class="porto-img"><i class="fas fa-film"></i></div>
+                <div class="porto-info">
+                    <h3>Movie Discovery</h3>
+                    <p>Aplikasi pencarian film menggunakan TMDB API dengan filter genre dan rating.</p>
+                    <div class="porto-tags"><span class="tag">React</span><span class="tag">Axios</span><span class="tag">CSS Modules</span></div>
+                    <a href="#" class="porto-link">Jelajahi <i class="fas fa-search"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Kontak / Contact Section -->
+<section id="Kontak">
+    <div class="container">
+        <div class="contact-wrapper">
+            <h2 class="section-title" style="margin-bottom: 0.5rem;">Hubungi Saya</h2>
+            <p style="margin-bottom: 0.8rem; color: #4b5563;">Tertarik untuk berkolaborasi atau sekadar ngobrol? Yuk terhubung!</p>
+            <div class="contact-icons">
+                <a href="#" class="contact-icon"><i class="fab fa-github"></i></a>
+                <a href="#" class="contact-icon"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="contact-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="contact-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p style="margin-top: 1.5rem;">📧 ghatfanrizki626@gmail.com | 📍 Gresik, Indonesia</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>© 2026 Ghatfan Aufa Rizki | Rekayasa Perangkat Lunak. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    (function() {
+        // Mobile toggle
+        const mobileBtn = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        if (mobileBtn) {
+            mobileBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+
+        // Active link on scroll (highlight menu sesuai section)
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-link');
+        
+        function updateActiveLink() {
+            let current = '';
+            const scrollPos = window.scrollY + 120;
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navItems.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href').substring(1);
+                if (href === current) {
+                    link.classList.add('active');
+                }
+            });
+            if (current === '') {
+                document.querySelector('.nav-link[href="#Home"]')?.classList.add('active');
+            }
+        }
+        
+        window.addEventListener('scroll', () => {
+            updateActiveLink();
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 40) {
+                navbar.style.background = "rgba(255, 255, 255, 0.96)";
+                navbar.style.boxShadow = "0 2px 10px rgba(0,0,0,0.05)";
+            } else {
+                navbar.style.background = "rgba(255, 255, 255, 0.92)";
+                navbar.style.boxShadow = "none";
+            }
+        });
+        
+        // Smooth scroll untuk semua anchor
+        document.querySelectorAll('.nav-link, .btn-primary, .btn-outline, .logo a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const hash = this.getAttribute('href');
+                if (hash && hash.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(hash);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                        if (navLinks.classList.contains('active')) navLinks.classList.remove('active');
+                    }
+                } else if (hash === '#') {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        });
+        
+        updateActiveLink();
+    })();
+</script>
+</body>
+</html>
